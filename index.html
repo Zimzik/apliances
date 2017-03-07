@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SomeApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Appliances</title>
+  <script src="libs/angular.min.js"></script>
+  <link rel="stylesheet" href="libs/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="libs/bootstrap.min.css">
+  <script src="script/script.js"></script>
+  <link rel="stylesheet" href="style/style.css">
+</head>
+<body ng-controller="SomeAppCtrl">
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Appliances electricity</h3>
+        <div class="user-block text-right">
+          <div class="user">{{user}}</div>
+          <button class="btn btn-default">Log Off</button>
+        </div>
+      </div>
+      <div class="panel-body"></div>
+    </div>
+    <div ng-if="logged" ng-include=""></div>
+  </div>
+</body>
+</html>
