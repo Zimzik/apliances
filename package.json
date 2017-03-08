@@ -1,0 +1,26 @@
+{
+  "name": "apliances",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-webserver": "^0.9.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zimzik/apliances.git"
+  },
+  "author": "Zimzik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zimzik/apliances/issues"
+  },
+  "homepage": "https://github.com/Zimzik/apliances#readme"
+}
