@@ -11,14 +11,16 @@
 </head>
 
 <body ng-controller="SomeAppCtrl">
+
+<!--Main workspace-->
  
   <div class="container" ng-if="logged">
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <h3 class="col-md-4">Appliances electricity</h3>
         <div class="user-block col-md-2 col-md-offset-6">
-          <span class="user">{{user}}</span>
-          <button class="btn btn-primary btn-sm">Log Off</button>
+          <span class="user">{{activeUser}}</span>
+          <button class="btn btn-primary btn-sm" ng-click="logOff()">Log Off</button>
         </div>
       </div>
       <div class="panel-body">
@@ -26,7 +28,8 @@
     </div>
   </div>
   
-  
+<!--Log on window-->
+
 <div ng-if="loginWindow">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -35,13 +38,13 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <input type="text" class="form-control input-lg " ng-model="userLogin" placeholder="Username" />
-          <p class="text-warning" ng-if="loginUserNameWarn">This is incorrect login</p>
+          <input type="text" class="form-control input-lg " ng-model="userInfo.userLogin" placeholder="Username" />
+          <p class="text-warning" ng-show="loginWarning.nameWarning">This is incorrect login</p>
         </div>
 
         <div class="form-group">
-          <input type="password" class="form-control input-lg" ng-model="userPass" placeholder="Password" />
-          <p class="text-warning" ng-if="loginUserPassWarn">This is incorrect password</p>
+          <input type="password" class="form-control input-lg" ng-model="userInfo.userPass" placeholder="Password" />
+          <p class="text-warning" ng-show="loginWarning.passWarning">This is incorrect password</p>
         </div>
 
         <div class="form-group">
@@ -52,7 +55,9 @@
     </div>
   </div>
   </div>
-  
+
+<!--Register window-->
+
 <div ng-if="registerWindow">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -61,21 +66,23 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <input type="text" class="form-control input-lg" placeholder="Username" />
-          <p class="text-warning" ng-if="regUserNameWarn">This login is already used</p>
+          <input type="text" class="form-control input-lg" ng-model="userInfo.userLogin" placeholder="Username" />
+          <p class="text-warning" ng-show="regWarning.nameWarning">This login is already used</p>
         </div>
 
         <div class="form-group">
-          <input type="password" class="form-control input-lg" placeholder="Password" />
+          <input type="password" class="form-control input-lg"ng-model="userInfo.userPass" placeholder="Password" />
+          <p class="text-warning" ng-show="regWarning.passWarning">Password must have lengh 3 or more sumbols</p>
         </div>
 
         <div class="form-group">
-          <input type="password" class="form-control input-lg" placeholder="Confirm password" />
-          <p class="text-warning" ng-if="regUserPassConfWarn">Incorrect password confirmation</p>
+          <input type="password" class="form-control input-lg" ng-model="userInfo.confUserPass" placeholder="Confirm password" />
+          <p class="text-warning" ng-show="regWarning.passConfWarning">Incorrect password confirmation</p>
         </div>
 
         <div class="form-group">
-          <input type="submit" class="btn btn-block btn-lg btn-primary" value="Register" />
+          <input type="submit" class="btn btn-block btn-lg btn-primary" ng-click="registration()" value="Register" />
+          <p class="bg-success" ng-show="regWarning.newUserCreated">New user has been created</p>
           <span class="pull-right"><a href="#" ng-click="activateLoginWindow()">Login</a></span>
         </div>
       </div>

@@ -13,57 +13,117 @@ angular.module("SomeApp", [])
   $scope.loginWindow = false;
   $scope.registerWindow = false;
   $scope.activeUser;
-  $scope.userLogin;
-  $scope.userPass;
   
-  $scope.loginUserNameWarn = false;
-  $scope.loginUserPassWarn = false;
+  $scope.userInfo = {
+    userLogin: "",
+    userPass: "",
+    confUserPass: ""
+  }
   
-  $scope.regUserNameWarn = false;
-  $scope.regUserPassConfWarn = false;
+  $scope.clearUserInfo = function() {
+    $scope.userInfo.userLogin = "";
+    $scope.userInfo.userPass = "";
+    $scope.userInfo.confUserPass = "";
+  }
   
+  $scope.loginWarning = {
+    nameWarning: false,
+    passWarning: false
+  }
+
+  $scope.regWarning = {
+    nameWarning: false,
+    passWarning: false,
+    passConfWarning: false,
+    newUserCreated: false
+  }
+
 if ($scope.logged == false) {
 
   $scope.loginWindow = true;
 
-  $scope.activateLoginWindow = function() {
-    $scope.loginUserNameWarn = false;
-    $scope.loginUserPassWarn = false;
+  $scope.activateLoginWindow = function () {
+    $scope.loginWarning.nameWarning = false;
+    $scope.loginWarning.passWarning = false;
     $scope.loginWindow = true;
     $scope.registerWindow = false;
   };
 
-  $scope.activateRegisterWindow = function() {
-    $scope.regUserNameWarn = false;
-    $scope.regUserPassConfWarn = false;
+  $scope.activateRegisterWindow = function () {
+    $scope.regWarning.nameWarining = false;
+    $scope.regWarning.passConfWarning = false;
     $scope.loginWindow = false;
     $scope.registerWindow = true;
   }
-  
-  $scope.login = function() {
+
+  $scope.login = function () {
     let count = 0;
-    let userLogin = $scope.userLogin;
-    $scope.users.forEach(function(el) {
-      console.log(el.login.toLowerCase());
-      console.log(userLogin);
-      if ((el.login.toLowerCase()) == ($userLogin.toLowerCase())) {
-/*        if (el.pass == $scope.userPass) {
-          $scope.activeUser = $scope.userLogin;
-          $scope.logged = true;
-          return;
-        } else {
-            $scope.loginUserNameWarn = false;
-            $scope.loginUserPassWarn = true;
-          }*/
+    $scope.users.forEach(function (el) {
+      if (el.login.toLowerCase() == $scope.userInfo.userLogin.toLowerCase()) {
+        $scope.loginWarning.nameWarning = false;
         console.log("Bingo");
-        console.log(el);
+        if (el.pass == $scope.userInfo.userPass) {
+          console.log("Pass Bingo");
+          $scope.loginWarning.passWarning = false;
+          $scope.loginWindow = false;
+          $scope.activeUser = $scope.userInfo.userLogin;
+          $scope.logged = true;
+          $scope.clearUserInfo();
         } else {
-/*          count++;
-          if (count == $scope.users.length) {
-            $scope.loginUserNameWarn = true;
-        }*/
+          console.log("Pass is incorrect");
+          $scope.loginWarning.passWarning = true;
+        }
+      } else {
+        count++
+        if (count == $scope.users.length) {
+          console.log("No matching logins");
+          $scope.loginWarning.nameWarning = true;
+        }
       }
     })
+  }
+
+  $scope.logOff = function () {
+    $scope.logged = false;
+    $scope.loginWindow = true;
+  }
+
+  $scope.registration = function () {
+    $scope.regWarning.nameWarning = false;
+    $scope.regWarning.passConfWarning = false;
+    $scope.regWarning.passWarning = false;
+    $scope.regWarning.newUserCreated = false;
+    let isLoginMatch = false;
+
+    $scope.users.some(function (el) {
+      console.log(el);
+      console.log($scope.userInfo.userLogin);
+      if (el.login.toLowerCase() == $scope.userInfo.userLogin.toLowerCase()) {
+        $scope.regWarning.nameWarning = true;
+        console.log("Logins is matching");
+        isLoginMatch = true;
+        return true;
+      };
+    });
+
+    if (!isLoginMatch) {
+      if ($scope.userInfo.userPass.length < 3) {
+        $scope.regWarning.passWarning = true;
+      } else {
+        $scope.regWarning.passWarning = false;
+        if ($scope.userInfo.userPass == $scope.userInfo.confUserPass) {
+          $scope.users.push({
+            login: $scope.userInfo.userLogin,
+            pass: $scope.userInfo.userPass
+          });
+          $scope.regWarning.newUserCreated = true;
+          console.log($scope.users);
+          $scope.clearUserInfo();
+        } else {
+          $scope.regWarning.passConfWarning = true;
+        }
+      }
+    }
   }
 }
 });
